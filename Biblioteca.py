@@ -78,6 +78,28 @@ def listarClientes(cur, conexao):
     for cliente in clientes:
         print(f"{cliente[0]} | {cliente[1]} | {cliente[2]} ")
 
+def inserirLivros(cur,conexao):
+    novoNome = input("Insira o nome do novo livro: ")
+    novoAutor = input("Insira o nome do Autor do livro:")
+
+    cur.execute(f'''
+    INSERT INTO "livros"
+    VALUES(default, '{novoNome}', '{novoAutor}',0)    
+    ''')
+    conexao.commit()
+
+
+def inserirAluguel(cur,conexao):
+    idClientes = int(input("Digite o id do Cliente"))
+    idLivros = int(input("Digite o id do Livro"))
+    cur.execute(f'''
+    INSERT INTO "aluguel"
+    VALUES(default, '{idClientes}', '{idLivros}')
+    ''')
+    conexao.commit()
+
+
+
 
 while True:
     try:
@@ -94,6 +116,8 @@ while True:
         2. Inserir Clientes
         3. Modificar Cliente
         4. Remover Cliente
+        5. Inserir Aluguel
+        6. Inserir Livros
         0. Finalizar
         ''')
 
@@ -108,6 +132,10 @@ while True:
                 modificarCliente(cursor, con)
             case "4":
                 removerCliente(cursor, con)
+            case "5":
+                inserirAluguel(cursor,con)
+            case "6":
+                inserirLivros(cursor,con)
             case "0":
                 print("Você escolheu sair da aplicação. Até Logo!")
                 break
